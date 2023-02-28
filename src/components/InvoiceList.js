@@ -4,10 +4,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 function InvoiceList(props) {
     return (
-        <Table striped hover>
+        <Table striped hover responsive='md'>
             <thead className='table-primary'>
                 <tr>
-                    <th>№</th>
+                    <th className='ps-5'>№</th>
                     <th>Date</th>
                     <th>Period</th>
                     <th>Quantity</th>
