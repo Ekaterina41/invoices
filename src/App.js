@@ -1,6 +1,6 @@
 import InvoiceList from './components/InvoiceList';
 import { Container, Pagination, Button } from "react-bootstrap";
-import { PlusLg, List } from "react-bootstrap-icons";
+import { PlusLg, List, CardList } from "react-bootstrap-icons";
 import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
@@ -31,10 +31,11 @@ function App() {
   return (
     <Container fluid>
 
-      {/* Left menu
-      <Button variant="light" className='border border-1 rounded-circle shadow'>
-        <List />
-      </Button> */}
+      {/* Left menu */}
+      <Button variant="light" size="lg" className='p-3 mx-2 border border-1 
+        rounded-circle shadow position-fixed'>
+        <List size='30' className='text-black-50'/>
+      </Button>
 
       {/* Main Content */}
       <div className='w-75 mx-auto mt-3 border border-1 rounded-3 shadow'>
