@@ -14,3 +14,7 @@ body {
 .ps-6 {
   padding-left: 6rem;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
