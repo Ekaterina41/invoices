@@ -5,17 +5,22 @@ import { PlusLg, List } from "react-bootstrap-icons";
 import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
-  const invoices  = [
-    { id: 1, number: 1, date: '2022-12-01', period: 'Nov 2022', quantity: 176, cost: 4048.00 },
-    { id: 2, number: 2, date: '2022-12-23', period: 'Dec 2022', quantity: 176, cost: 4048.00 },
-    { id: 3, number: 3, date: '2023-02-01', period: 'Jan 2023', quantity: 160, cost: 3680.00 },
-    { id: 4, number: 4, date: '2022-12-01', period: 'Nov 2022', quantity: 176, cost: 4048.00 },
-    { id: 5, number: 5, date: '2022-12-23', period: 'Dec 2022', quantity: 176, cost: 4048.00 },
-    { id: 6, number: 6, date: '2023-02-01', period: 'Jan 2023', quantity: 160, cost: 3680.00 },
-    { id: 7, number: 7, date: '2022-12-01', period: 'Nov 2022', quantity: 176, cost: 4048.00 },
-    { id: 8, number: 8, date: '2022-12-23', period: 'Dec 2022', quantity: 176, cost: 4048.00 },
-    { id: 10, number: 10, date: '2023-02-06', period: 'Feb 2023', quantity: 160, cost: 3680.00 }
-  ];
+  const [invoices, setInvoices] = useState([
+    { id: 1, number: 1, date: '2022-12-01', period: '2022-11', quantity: 176, cost: 4048.00 },
+    { id: 2, number: 2, date: '2022-12-23', period: '2022-12', quantity: 176, cost: 4048.00 },
+    { id: 3, number: 3, date: '2023-02-01', period: '2023-01', quantity: 160, cost: 3680.00 },
+    { id: 4, number: 4, date: '2022-12-01', period: '2022-11', quantity: 176, cost: 4048.00 },
+    { id: 5, number: 5, date: '2022-12-23', period: '2022-12', quantity: 176, cost: 4048.00 },
+    { id: 6, number: 6, date: '2023-02-01', period: '2023-01', quantity: 160, cost: 3680.00 },
+    { id: 7, number: 7, date: '2022-12-01', period: '2022-11', quantity: 176, cost: 4048.00 },
+    { id: 8, number: 8, date: '2022-12-23', period: '2022-12', quantity: 176, cost: 4048.00 },
+    { id: 10, number: 10, date: '2023-02-06', period: '2023-02', quantity: 160, cost: 3680.00 }
+  ]);
+
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [newInvoice, setNewInvoice] = useState(
+    {id: null, number: null, date: '', period: '', quantity: 0, cost: 0}
+  );
 
   // Pagination items
   let currentPage = 2;
@@ -41,6 +46,11 @@ function App() {
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
 
+  const openModal = (invoice) => {
+    setSelectedInvoice(invoice);
+    setShowModal(true);
+  };
+
   // Form utils
   const currentDate = new Date();
   const defaultInvoiceDate = currentDate.toISOString().split('T')[0];
@@ -49,11 +59,17 @@ function App() {
   prevMonthDate.setMonth(currentDate.getMonth()-1);
   const defaultInvoicePeriod = prevMonthDate.toISOString().substring(0, 7);
 
-  const [invoiceNumber, setInvoiceNumber] = useState(1);
+  // const [invoiceNumber, setInvoiceNumber] = useState(1);
+  // const [invoiceQuantity, setInvoiceQuantity] = useState(0);
+  // const [invoiceCost, setInvoiceCost] = useState(0.00);
 
-  const handleNumInput = (e) => {
-      setInvoiceNumber((oldVal) => e.target.value.length <= 5 ? e.target.value : oldVal)
-  }
+  // TODO - add improved validation
+  // function handleNumInput(maxLength, updateStateFunction) {
+  //   return (event) => {
+  //     updateStateFunction((oldVal) => 
+  //       event.target.value.length <= maxLength ? event.target.value : oldVal)
+  //   }
+  // }
 
   return (
     <Container fluid>
@@ -90,7 +106,7 @@ function App() {
           </Button>
         </header>
 
-        <InvoiceList invoices={invoices} />
+        <InvoiceList invoices={invoices} openModal={openModal} />
 
         <Pagination className='justify-content-center'>
           <Pagination.First />
@@ -105,40 +121,58 @@ function App() {
       <Modal show={showModal} onHide={handleCloseModal} backdrop='static' keyboard={false}
         size='lg'>
         <Modal.Header closeButton>
-          <Modal.Title>Invoice #</Modal.Title>
+          <Modal.Title>Invoice #{selectedInvoice ? selectedInvoice.number : 0}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formInvoiceNumber">
-                <Form.Label>Invoice number</Form.Label>
-                <Form.Control type="number" value={invoiceNumber} onChange={handleNumInput}/>
-              </Form.Group>
-              <Form.Group as={Col} controlId="formInvoiceDate">
-                <Form.Label>Document date</Form.Label>
-                <Form.Control type="date" defaultValue={defaultInvoiceDate}/>
-              </Form.Group>
-            </Row>
+          <Form className="ps-4">
+          <Row>
+            <Col sm={9}>
+              <Row className="mb-3">
+                {/* <Form.Group as={Col} controlId="formInvoiceNumber" className="mb-3"> */}
+                <Col xs={3}>
+                  <Form.Label>Number</Form.Label>
+                  <Form.Control type="number" 
+                    value={selectedInvoice ? selectedInvoice.number : 0}/>
+                </Col>
+                {/* </Form.Group> */}
+                {/* <Form.Group as={Col} controlId="formInvoiceDate" className="mb-3"> */}
+                <Col xs={4}>
+                  <Form.Label>Date</Form.Label>
+                  <Form.Control type="date" 
+                    value={selectedInvoice ? selectedInvoice.date : defaultInvoiceDate}/>
+                </Col>
+                {/* </Form.Group> */}
+              </Row>
+              <Row className="mb-4">
+                <Col xs={4}>
+                  <Form.Label>Period</Form.Label>
+                  <Form.Control type="month" 
+                    value={selectedInvoice ? selectedInvoice.period : defaultInvoicePeriod}/>
+                </Col>
+                <Col xs={3}>
+                  <Form.Label>Quantity, hours</Form.Label>
+                  <Form.Control type="number" value={selectedInvoice ? selectedInvoice.quantity : 0}/>        
+                </Col>
+                <Col  xs={4}>
+                  <Form.Label>Cost, $</Form.Label>
+                  <Form.Control type="number"value={selectedInvoice ? selectedInvoice.cost : 0}/>
+                </Col>
+              </Row>
+            </Col>
 
-            <Form.Group controlId="formInvoicePeriod" className="mb-3" >
-              <Form.Label>Period</Form.Label>
-              <Form.Control type="month" defaultValue={defaultInvoicePeriod}/>
-            </Form.Group>
-            <Form.Group controlId="formInvoiceQuantity" className="mb-3" >
-              <Form.Label>Quantity, hours</Form.Label>
-              <Form.Control type="number"/>
-            </Form.Group>
-            <Form.Group controlId="formInvoiceCost" className="mb-3" >
-              <Form.Label>Cost, $</Form.Label>
-              <Form.Control type="number"/>
-            </Form.Group>
+            <Col className="border-start">
+              <div className="d-grid gap-2">
+                <Button variant="primary" type="submit" className="mb-2">
+                  Save
+                </Button>
+                <Button variant="primary" className="mb-2" disabled>
+                  Generate PDF
+                </Button>
+              </div>
+            </Col>
+          </Row>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseModal}>
-            Save
-          </Button>
-        </Modal.Footer>
       </Modal>
 
     </Container>

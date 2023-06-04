@@ -17,7 +17,9 @@ function InvoiceList(props) {
             <tbody>
                 {
                     props.invoices.map((invoice) => (
-                        <InvoiceListItem key={invoice.id} invoice={invoice}/>
+                        <InvoiceListItem key={invoice.id} 
+                            invoice={invoice} 
+                            openModal={props.openModal}/>
                     ))
                 }
             </tbody>

@@ -8,7 +8,7 @@ software developer services monthly payment.
 
 To run this application, you need to install [Node.js](https://nodejs.org/) and npm (included with Node.js).
 
-## Running the app
+## Install modules
 
 ### `npm install react-bootstrap bootstrap`
 
@@ -17,6 +17,7 @@ Installs react bootstrap modules. It allows to use Bootstrap classes as React co
 ### `npm install react-bootstrap-icons --save`
 
 Adds bootstrap icons package to display bootstrap icons in the UI.
+## Running the app
 ### `npm start`
 
 Runs the app in the development mode.\
