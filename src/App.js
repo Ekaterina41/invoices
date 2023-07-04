@@ -17,11 +17,6 @@ function App() {
     { id: 10, number: 10, date: '2023-02-06', period: '2023-02', quantity: 160, cost: 3680.00 }
   ]);
 
-  const [selectedInvoice, setSelectedInvoice] = useState(null);
-  const [newInvoice, setNewInvoice] = useState(
-    {id: null, number: null, date: '', period: '', quantity: 0, cost: 0}
-  );
-
   // Pagination items
   let currentPage = 2;
   let numberOfPages = 8;
@@ -40,6 +35,19 @@ function App() {
   const handleCloseMenu = () => setShowMenu(false);
   const handleShowMenu = () => setShowMenu(true);
 
+  // Form utils
+  const currentDate = new Date();
+  const defaultInvoiceDate = currentDate.toISOString().split('T')[0];
+  
+  const prevMonthDate = new Date(currentDate);
+  prevMonthDate.setMonth(currentDate.getMonth()-1);
+  const defaultInvoicePeriod = prevMonthDate.toISOString().substring(0, 7);
+
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [newInvoice, setNewInvoice] = useState(
+    {id: 0, number: 0, date: defaultInvoiceDate, period: defaultInvoicePeriod, quantity: 0, cost: 0}
+  );
+
   // Modal utils
   const [showModal, setShowModal] = useState(false);
 
@@ -50,14 +58,6 @@ function App() {
     setSelectedInvoice(invoice);
     setShowModal(true);
   };
-
-  // Form utils
-  const currentDate = new Date();
-  const defaultInvoiceDate = currentDate.toISOString().split('T')[0];
-  
-  const prevMonthDate = new Date(currentDate);
-  prevMonthDate.setMonth(currentDate.getMonth()-1);
-  const defaultInvoicePeriod = prevMonthDate.toISOString().substring(0, 7);
 
   // const [invoiceNumber, setInvoiceNumber] = useState(1);
   // const [invoiceQuantity, setInvoiceQuantity] = useState(0);
@@ -128,34 +128,52 @@ function App() {
           <Row>
             <Col sm={9}>
               <Row className="mb-3">
-                {/* <Form.Group as={Col} controlId="formInvoiceNumber" className="mb-3"> */}
                 <Col xs={3}>
                   <Form.Label>Number</Form.Label>
                   <Form.Control type="number" 
-                    value={selectedInvoice ? selectedInvoice.number : 0}/>
+                    value={selectedInvoice ? selectedInvoice.number : newInvoice.number}
+                    onChange={(e) => selectedInvoice 
+                      ? setSelectedInvoice({...selectedInvoice, number: e.target.value}) 
+                      : setNewInvoice({ ...newInvoice, number: e.target.value })}
+                  />
                 </Col>
-                {/* </Form.Group> */}
-                {/* <Form.Group as={Col} controlId="formInvoiceDate" className="mb-3"> */}
                 <Col xs={4}>
                   <Form.Label>Date</Form.Label>
                   <Form.Control type="date" 
-                    value={selectedInvoice ? selectedInvoice.date : defaultInvoiceDate}/>
+                    value={selectedInvoice ? selectedInvoice.date : newInvoice.date}
+                    onChange={(e) => selectedInvoice 
+                      ? setSelectedInvoice({...selectedInvoice, date: e.target.value}) 
+                      : setNewInvoice({ ...newInvoice, date: e.target.value })}
+                  />
                 </Col>
-                {/* </Form.Group> */}
               </Row>
               <Row className="mb-4">
                 <Col xs={4}>
                   <Form.Label>Period</Form.Label>
                   <Form.Control type="month" 
-                    value={selectedInvoice ? selectedInvoice.period : defaultInvoicePeriod}/>
+                    value={selectedInvoice ? selectedInvoice.period : newInvoice.period}
+                    onChange={(e) => selectedInvoice 
+                      ? setSelectedInvoice({...selectedInvoice, period: e.target.value}) 
+                      : setNewInvoice({ ...newInvoice, period: e.target.value })}
+                  />
                 </Col>
                 <Col xs={3}>
                   <Form.Label>Quantity, hours</Form.Label>
-                  <Form.Control type="number" value={selectedInvoice ? selectedInvoice.quantity : 0}/>        
+                  <Form.Control type="number" 
+                    value={selectedInvoice ? selectedInvoice.quantity : newInvoice.quantity}
+                    onChange={(e) => selectedInvoice 
+                      ? setSelectedInvoice({...selectedInvoice, quantity: e.target.value}) 
+                      : setNewInvoice({ ...newInvoice, quantity: e.target.value })}
+                  />        
                 </Col>
                 <Col  xs={4}>
                   <Form.Label>Cost, $</Form.Label>
-                  <Form.Control type="number"value={selectedInvoice ? selectedInvoice.cost : 0}/>
+                  <Form.Control type="number" 
+                    value={selectedInvoice ? selectedInvoice.cost : newInvoice.cost}
+                    onChange={(e) => selectedInvoice 
+                      ? setSelectedInvoice({...selectedInvoice, cost: e.target.value}) 
+                      : setNewInvoice({ ...newInvoice, cost: e.target.value })}
+                  />
                 </Col>
               </Row>
             </Col>
