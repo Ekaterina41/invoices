@@ -45,7 +45,11 @@ function App() {
   // Modal utils
   const [showModal, setShowModal] = useState(false);
 
-  const handleCloseModal = () => setShowModal(false);
+  const handleCloseModal = () => {
+    setSelectedInvoice(null);
+    setNewInvoice({id: 0, number: 0, date: defaultInvoiceDate, period: defaultInvoicePeriod, quantity: 0, cost: 0});
+    setShowModal(false);
+  }
   const handleShowModal = () => setShowModal(true);
 
   const openModal = (invoice) => {
@@ -70,6 +74,12 @@ function App() {
     setShowModal(false);
   };
 
+  const deleteInvoice = () => {
+    setInvoices(invoices.filter(i => i.id !== selectedInvoice.id));
+    setSelectedInvoice(null);
+    setShowModal(false);
+  }
+
   return (
     <Container fluid>
 
@@ -92,7 +102,6 @@ function App() {
               <hr/>
             </Nav.Item> 
           </Nav>
-          {/* <li class="border-top my-3"></li> */}
         </Offcanvas.Body>
       </Offcanvas>
 
@@ -186,6 +195,11 @@ function App() {
                 <Button variant="primary" className="mb-2" disabled>
                   Generate PDF
                 </Button>
+                {selectedInvoice && // don't show for new invoices
+                <Button variant="danger" className="mb-2 mt-5"
+                  onClick={deleteInvoice}>
+                  Delete
+                </Button>}
               </div>
             </Col>
           </Row>
