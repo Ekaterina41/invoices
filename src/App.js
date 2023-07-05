@@ -6,9 +6,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
   const [invoices, setInvoices] = useState([
-    { id: 1, number: 1, date: '2022-12-01', period: '2022-11', quantity: 176, cost: 4048.00 },
-    { id: 2, number: 2, date: '2022-12-23', period: '2022-12', quantity: 176, cost: 4048.00 },
-    { id: 3, number: 3, date: '2023-02-01', period: '2023-01', quantity: 160, cost: 3680.00 }
+    // { id: 1, number: 1, date: '2022-12-01', period: '2022-11', quantity: 176, cost: 4048.00 },
+    // { id: 2, number: 2, date: '2022-12-23', period: '2022-12', quantity: 176, cost: 4048.00 },
+    // { id: 3, number: 3, date: '2023-02-01', period: '2023-01', quantity: 160, cost: 3680.00 }
   ]);
 
   // Pagination items
@@ -81,7 +81,7 @@ function App() {
   }
 
   return (
-    <Container fluid>
+    <Container fluid className='h-100'>
 
       {/* Left menu sidebar */}
       <Button variant="light" size="lg" onClick={handleShowMenu} 
@@ -106,7 +106,7 @@ function App() {
       </Offcanvas>
 
       {/* Main Content */}
-      <div className='w-75 mx-auto mt-3 border border-1 rounded-3 shadow'>
+      <div className='w-75 mx-auto mt-3 border border-1 rounded-3 shadow' style={{height: "95vh"}}>
         <header className='p-4 d-flex justify-content-between'>
           <h1>Invoices</h1>
           <Button variant="primary" onClick={handleShowModal} className='mt-1 mb-1 ps-3 pe-4'>
@@ -116,7 +116,7 @@ function App() {
 
         <InvoiceList invoices={invoices} openModal={openModal} />
 
-        <Pagination className='justify-content-center'>
+        <Pagination className='justify-content-center fixed-bottom mb-4'>
           <Pagination.First />
           <Pagination.Ellipsis disabled />
           {paginationItems}
@@ -195,7 +195,7 @@ function App() {
                 <Button variant="primary" className="mb-2" disabled>
                   Generate PDF
                 </Button>
-                {selectedInvoice && // don't show for new invoices
+                {selectedInvoice && // don't show for the new invoices
                 <Button variant="danger" className="mb-2 mt-5"
                   onClick={deleteInvoice}>
                   Delete
