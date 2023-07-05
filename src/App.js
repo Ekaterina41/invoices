@@ -8,13 +8,7 @@ function App() {
   const [invoices, setInvoices] = useState([
     { id: 1, number: 1, date: '2022-12-01', period: '2022-11', quantity: 176, cost: 4048.00 },
     { id: 2, number: 2, date: '2022-12-23', period: '2022-12', quantity: 176, cost: 4048.00 },
-    { id: 3, number: 3, date: '2023-02-01', period: '2023-01', quantity: 160, cost: 3680.00 },
-    { id: 4, number: 4, date: '2022-12-01', period: '2022-11', quantity: 176, cost: 4048.00 },
-    { id: 5, number: 5, date: '2022-12-23', period: '2022-12', quantity: 176, cost: 4048.00 },
-    { id: 6, number: 6, date: '2023-02-01', period: '2023-01', quantity: 160, cost: 3680.00 },
-    { id: 7, number: 7, date: '2022-12-01', period: '2022-11', quantity: 176, cost: 4048.00 },
-    { id: 8, number: 8, date: '2022-12-23', period: '2022-12', quantity: 176, cost: 4048.00 },
-    { id: 10, number: 10, date: '2023-02-06', period: '2023-02', quantity: 160, cost: 3680.00 }
+    { id: 3, number: 3, date: '2023-02-01', period: '2023-01', quantity: 160, cost: 3680.00 }
   ]);
 
   // Pagination items
@@ -59,17 +53,22 @@ function App() {
     setShowModal(true);
   };
 
-  // const [invoiceNumber, setInvoiceNumber] = useState(1);
-  // const [invoiceQuantity, setInvoiceQuantity] = useState(0);
-  // const [invoiceCost, setInvoiceCost] = useState(0.00);
+  const createInvoice = () => {
+    const generatedId = invoices.length + 1;
+    const invoiceWithId = { ...newInvoice, id: generatedId };
+    setInvoices([...invoices, invoiceWithId]);
+    setNewInvoice({id: 0, number: 0, date: defaultInvoiceDate, period: defaultInvoicePeriod, quantity: 0, cost: 0});
+    setShowModal(false);
+  };
 
-  // TODO - add improved validation
-  // function handleNumInput(maxLength, updateStateFunction) {
-  //   return (event) => {
-  //     updateStateFunction((oldVal) => 
-  //       event.target.value.length <= maxLength ? event.target.value : oldVal)
-  //   }
-  // }
+  const updateInvoice = () => {
+    const updatedInvoices = invoices.map((invoice) =>
+      invoice.id === selectedInvoice.id ? selectedInvoice : invoice
+    );
+    setInvoices(updatedInvoices);
+    setSelectedInvoice(null);
+    setShowModal(false);
+  };
 
   return (
     <Container fluid>
@@ -180,7 +179,8 @@ function App() {
 
             <Col className="border-start">
               <div className="d-grid gap-2">
-                <Button variant="primary" type="submit" className="mb-2">
+                <Button variant="primary" className="mb-2"
+                  onClick={selectedInvoice ? updateInvoice : createInvoice }>
                   Save
                 </Button>
                 <Button variant="primary" className="mb-2" disabled>
