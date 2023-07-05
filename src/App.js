@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import InvoiceList from './components/InvoiceList';
+import InvoiceList from './components/invoice/InvoiceList';
 import { Container, Pagination, Button, Offcanvas, Nav, Modal, Form, Row, Col } from "react-bootstrap";
 import { PlusLg, List } from "react-bootstrap-icons";
 import 'bootstrap/dist/css/bootstrap.css';
