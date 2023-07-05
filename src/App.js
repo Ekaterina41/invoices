@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import InvoiceList from './components/invoice/InvoiceList';
-import { Container, Pagination, Button, Offcanvas, Nav, Modal, Form, Row, Col } from "react-bootstrap";
+import InvoicePagination from './components/InvoicePagination';
+import InvoiceSideMenu from './components/InvoiceSideMenu';
+import { Container, Button, Modal, Form, Row, Col } from "react-bootstrap";
 import { PlusLg, List } from "react-bootstrap-icons";
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -11,23 +13,8 @@ function App() {
     // { id: 3, number: 3, date: '2023-02-01', period: '2023-01', quantity: 160, cost: 3680.00 }
   ]);
 
-  // Pagination items
-  let currentPage = 2;
-  let numberOfPages = 8;
-  let paginationItems = [];
-  for (let number = 1; number <= numberOfPages; number++) {
-    paginationItems.push(
-      <Pagination.Item key={number} active={number === currentPage}>
-        {number}
-      </Pagination.Item>,
-    );
-  }
-
   // Menu utils
   const [showMenu, setShowMenu] = useState(false);
-
-  const handleCloseMenu = () => setShowMenu(false);
-  const handleShowMenu = () => setShowMenu(true);
 
   // Form utils
   const currentDate = new Date();
@@ -84,26 +71,12 @@ function App() {
     <Container fluid className='h-100'>
 
       {/* Left menu sidebar */}
-      <Button variant="light" size="lg" onClick={handleShowMenu} 
+      <Button variant="light" size="lg" onClick={() => setShowMenu(true)} 
         className='p-3 mx-2 border border-1 rounded-circle shadow position-fixed'>
         <List size='30' className='text-black-50'/>
       </Button>
 
-      <Offcanvas show={showMenu} onHide={handleCloseMenu} className='w-25'>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Menu</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <Nav className='flex-column'>
-            <Nav.Item>
-              <Nav.Link disabled>Invoices</Nav.Link>
-            </Nav.Item> 
-            <Nav.Item>
-              <hr/>
-            </Nav.Item> 
-          </Nav>
-        </Offcanvas.Body>
-      </Offcanvas>
+      <InvoiceSideMenu showMenu={showMenu} setShowMenu={setShowMenu} />
 
       {/* Main Content */}
       <div className='w-75 mx-auto mt-3 border border-1 rounded-3 shadow' style={{height: "95vh"}}>
@@ -116,13 +89,7 @@ function App() {
 
         <InvoiceList invoices={invoices} openModal={openModal} />
 
-        <Pagination className='justify-content-center fixed-bottom mb-4'>
-          <Pagination.First />
-          <Pagination.Ellipsis disabled />
-          {paginationItems}
-          <Pagination.Ellipsis disabled />
-          <Pagination.Last />
-        </Pagination>
+        <InvoicePagination/>
       </div>
 
       {/* Modal */}
