@@ -15,7 +15,7 @@ function InvoiceList(props) {
                                 <th>Date</th>
                                 <th>Period</th>
                                 <th>Quantity</th>
-                                <th>Cost</th>
+                                <th>Total to pay</th>
                             </tr>
                         </thead>
                         <tbody>
