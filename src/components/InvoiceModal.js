@@ -15,12 +15,12 @@ function InvoiceModal(props) {
   const setShowModal = props.setShowModal;
 
   // New invoice utils
-  const currentDate = new Date();
-  const defaultInvoiceDate = currentDate.toISOString().split('T')[0];
-
-  const prevMonthDate = new Date(currentDate);
-  prevMonthDate.setMonth(currentDate.getMonth() - 1);
-  const defaultInvoicePeriod = prevMonthDate.toISOString().substring(0, 7);
+    const currentDate = new Date();
+    const defaultInvoiceDate = currentDate.toISOString().split('T')[0];
+  
+    const prevMonthDate = new Date(currentDate);
+    prevMonthDate.setMonth(currentDate.getMonth() - 1);
+    const defaultInvoicePeriod = prevMonthDate.toISOString().substring(0, 7);
 
   // Functions
   const handleCloseModal = () => {
@@ -114,7 +114,7 @@ function InvoiceModal(props) {
                   </Col>
                 </Row>
                 <Row>
-                  <p class="h5 text-primary">Invoice entries</p>
+                  <p className="h5 text-primary">Invoice entries</p>
                 </Row>
                 <Row className="mb-3">
                   <Accordion>

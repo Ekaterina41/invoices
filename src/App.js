@@ -9,9 +9,24 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
   const [invoices, setInvoices] = useState([
-    // { id: 1, number: 1, date: '2022-12-01', period: '2022-11', quantity: 176, cost: 4048.00 },
-    // { id: 2, number: 2, date: '2022-12-23', period: '2022-12', quantity: 176, cost: 4048.00 },
-    // { id: 3, number: 3, date: '2023-02-01', period: '2023-01', quantity: 160, cost: 3680.00 }
+    {
+      id: 14, 
+      number: 14,
+      date: '2023-07-03',
+      period: '2023-06',
+      vacations: 0,
+      total: 4048,
+      vat: 0,
+      ttp: 4048,
+      invoiceEntries: [
+        {
+          id: 1,
+          serviceName: "The services of software development from 01.06.2023 to 30.06.2023",
+          quantity: 176,
+          cost: 4048
+        }
+      ]
+    }
   ]);
 
   // Menu utils

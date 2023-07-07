@@ -25,7 +25,7 @@ body {
 }
 
 #invoice-modal-dialog {
-    height: 100vh;
+    min-height: 100vh;
     margin-top: 0;
     margin-bottom: 0;
 }
