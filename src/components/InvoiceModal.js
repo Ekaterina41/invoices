@@ -15,12 +15,12 @@ function InvoiceModal(props) {
   const setShowModal = props.setShowModal;
 
   // New invoice utils
-    const currentDate = new Date();
-    const defaultInvoiceDate = currentDate.toISOString().split('T')[0];
-  
-    const prevMonthDate = new Date(currentDate);
-    prevMonthDate.setMonth(currentDate.getMonth() - 1);
-    const defaultInvoicePeriod = prevMonthDate.toISOString().substring(0, 7);
+  const currentDate = new Date();
+  const defaultInvoiceDate = currentDate.toISOString().split('T')[0];
+
+  const prevMonthDate = new Date(currentDate);
+  prevMonthDate.setMonth(currentDate.getMonth() - 1);
+  const defaultInvoicePeriod = prevMonthDate.toISOString().substring(0, 7);
 
   // Functions
   const handleCloseModal = () => {
@@ -61,7 +61,7 @@ function InvoiceModal(props) {
       size='lg'>
       <Modal.Dialog id="invoice-modal-dialog">
         <Modal.Header closeButton>
-          <Modal.Title>Invoice #{selectedInvoice ? selectedInvoice.number : 0}</Modal.Title>
+          <Modal.Title>Invoice #{selectedInvoice ? selectedInvoice.number : newInvoice.number}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form className="ps-1">
@@ -100,14 +100,19 @@ function InvoiceModal(props) {
                   <Col xs={{ span: 3, offset: 2 }}>
                     <Form.Label>Vacations/holidays</Form.Label>
                     <InputGroup>
-                      <Form.Control type="number" aria-describedby="days-suffix-vacation" />
+                      <Form.Control type="number" aria-describedby="days-suffix-vacation"
+                        value={selectedInvoice ? selectedInvoice.vacations : newInvoice.vacations}
+                        onChange={(e) => selectedInvoice
+                          ? setSelectedInvoice({ ...selectedInvoice, vacations: e.target.value })
+                          : setNewInvoice({ ...newInvoice, pevacationsriod: e.target.value })}
+                      />
                       <InputGroup.Text id="days-suffix-vacation">days</InputGroup.Text>
                     </InputGroup>
                   </Col>
                   <Col xs={3}>
                     <Form.Label>Days worked</Form.Label>
                     <InputGroup>
-                      <Form.Control type="number" aria-describedby="days-suffix-workdays"
+                      <Form.Control type="number" aria-describedby="days-suffix-workdays" disabled
                       />
                       <InputGroup.Text id="days-suffix-workdays">days</InputGroup.Text>
                     </InputGroup>
@@ -120,18 +125,24 @@ function InvoiceModal(props) {
                   <Accordion>
                     <Accordion.Item eventKey="0">
                       <Accordion.Header>
-                        The services of software development from 01.06.2023 to 30.06.2023
+                        {selectedInvoice
+                          ? selectedInvoice.invoiceEntries[0].serviceName
+                          : newInvoice.invoiceEntries[0].serviceName}
                       </Accordion.Header>
                       <Accordion.Body className='ps-2 pe-2'>
                         <Row className="mb-3">
                           <Form.Label>Service name</Form.Label>
                           <InputGroup>
-                            <Form.Control type="text" disabled
+                            <Form.Control id="" type="text" disabled
                               aria-label="Edit service name"
                               aria-describedby="edit-servicename-btn"
-                              value="The services of software development from 01.06.2023 to 30.06.2023"
+                              value={selectedInvoice
+                                ? selectedInvoice.invoiceEntries[0].serviceName
+                                : newInvoice.invoiceEntries[0].serviceName}
                             />
                             <Button id="edit-servicename-btn">
+                              {/* TODO should enable/disable servicename input, implement when multiple entries are done
+                            using the local state of the entry */}
                               <PencilSquare />
                             </Button>
                           </InputGroup>
@@ -150,10 +161,9 @@ function InvoiceModal(props) {
                             <Form.Label>Quantity</Form.Label>
                             <InputGroup>
                               <Form.Control type="number" aria-describedby="hours-quantity"
-                                value={selectedInvoice ? selectedInvoice.quantity : newInvoice.quantity}
-                                onChange={(e) => selectedInvoice
-                                  ? setSelectedInvoice({ ...selectedInvoice, quantity: e.target.value })
-                                  : setNewInvoice({ ...newInvoice, quantity: e.target.value })}
+                                value={selectedInvoice
+                                  ? selectedInvoice.invoiceEntries[0].quantity
+                                  : newInvoice.invoiceEntries[0].quantity}
                               />
                               <InputGroup.Text id="hours-quantity">hours</InputGroup.Text>
                             </InputGroup>
@@ -162,10 +172,9 @@ function InvoiceModal(props) {
                             <Form.Label>Cost</Form.Label>
                             <InputGroup>
                               <Form.Control type="number" aria-describedby="currency-cost"
-                                value={selectedInvoice ? selectedInvoice.cost : newInvoice.cost}
-                                onChange={(e) => selectedInvoice
-                                  ? setSelectedInvoice({ ...selectedInvoice, cost: e.target.value })
-                                  : setNewInvoice({ ...newInvoice, cost: e.target.value })}
+                                value={selectedInvoice
+                                  ? selectedInvoice.invoiceEntries[0].cost
+                                  : newInvoice.invoiceEntries[0].cost}
                               />
                               <InputGroup.Text id="currency-cost">.00 $</InputGroup.Text>
                             </InputGroup>
@@ -180,6 +189,7 @@ function InvoiceModal(props) {
                     <Form.Label>Total</Form.Label>
                     <InputGroup>
                       <Form.Control type="number" aria-describedby="currency-total"
+                        value={selectedInvoice ? selectedInvoice.total : newInvoice.total}
                       />
                       <InputGroup.Text id="currency-total">.00 $</InputGroup.Text>
                     </InputGroup>
@@ -188,7 +198,7 @@ function InvoiceModal(props) {
                     <Form.Label>VAT</Form.Label>
                     <InputGroup>
                       <Form.Control type="number" aria-describedby="percent-vat" disabled
-                        value={0}
+                        value={selectedInvoice ? selectedInvoice.vat : newInvoice.vat}
                       />
                       <InputGroup.Text id="percent-vat">%</InputGroup.Text>
                     </InputGroup>
@@ -197,7 +207,7 @@ function InvoiceModal(props) {
                     <Form.Label>Total to pay</Form.Label>
                     <InputGroup>
                       <Form.Control type="number" aria-describedby="currency-ttp"
-                        value={0}
+                        value={selectedInvoice ? selectedInvoice.ttp : newInvoice.ttp}
                       />
                       <InputGroup.Text id="currency-ttp">.00 $</InputGroup.Text>
                     </InputGroup>
