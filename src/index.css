@@ -18,3 +18,22 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
+
+#invoice-modal {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#invoice-modal-dialog {
+    height: 100vh;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.modal-content  {
+  /* -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important; */
+  border-radius: 0px !important; 
+  border-top: none !important;
+  border-bottom: none !important;
+}
