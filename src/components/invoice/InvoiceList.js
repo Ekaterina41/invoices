@@ -14,7 +14,7 @@ function InvoiceList(props) {
                                 <th className='ps-5'>№</th>
                                 <th>Date</th>
                                 <th>Period</th>
-                                <th>Quantity</th>
+                                <th>Days worked</th>
                                 <th>Total to pay</th>
                             </tr>
                         </thead>

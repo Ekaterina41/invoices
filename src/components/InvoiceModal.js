@@ -23,9 +23,31 @@ function InvoiceModal(props) {
   const defaultInvoicePeriod = prevMonthDate.toISOString().substring(0, 7);
 
   // Functions
+  const countNewInvoice = () => {
+    return {
+      id: 0,
+      number: 0,
+      date: defaultInvoiceDate,
+      period: defaultInvoicePeriod,
+      vacations: 0,
+      workdays: 22,
+      total: 0,
+      vat: 0,
+      ttp: 0,
+      invoiceEntries: [
+        {
+          id: 1,
+          serviceName: "The services of software development from 01.06.2023 to 30.06.2023",
+          quantity: 0,
+          cost: 0
+        }
+      ]
+    };
+  }
+
   const handleCloseModal = () => {
     setSelectedInvoice(null);
-    setNewInvoice({ id: 0, number: 0, date: defaultInvoiceDate, period: defaultInvoicePeriod, quantity: 0, cost: 0 });
+    setNewInvoice(countNewInvoice());
     setShowModal(false);
   }
 
@@ -33,7 +55,7 @@ function InvoiceModal(props) {
     const generatedId = invoices.length + 1;
     const invoiceWithId = { ...newInvoice, id: generatedId };
     setInvoices([...invoices, invoiceWithId]);
-    setNewInvoice({ id: 0, number: 0, date: defaultInvoiceDate, period: defaultInvoicePeriod, quantity: 0, cost: 0 });
+    setNewInvoice(countNewInvoice());
     setShowModal(false);
   };
 
@@ -52,9 +74,8 @@ function InvoiceModal(props) {
     setShowModal(false);
   }
 
-  const [newInvoice, setNewInvoice] = useState(
-    { id: 0, number: 0, date: defaultInvoiceDate, period: defaultInvoicePeriod, quantity: 0, cost: 0 }
-  );
+  // TODO update structure otherwise page fails to load
+  const [newInvoice, setNewInvoice] = useState(countNewInvoice);
 
   return (
     <Modal id='invoice-modal' show={showModal} onHide={handleCloseModal} backdrop='static' keyboard={false}
@@ -113,13 +134,15 @@ function InvoiceModal(props) {
                     <Form.Label>Days worked</Form.Label>
                     <InputGroup>
                       <Form.Control type="number" aria-describedby="days-suffix-workdays" disabled
+                        value={selectedInvoice ? selectedInvoice.workdays : newInvoice.workdays}
                       />
                       <InputGroup.Text id="days-suffix-workdays">days</InputGroup.Text>
                     </InputGroup>
                   </Col>
                 </Row>
                 <Row>
-                  <p className="h5 text-primary">Invoice entries</p>
+                  <p className="h5 text-primary m-3">Invoice entries</p>
+                  {/* TODO button to add new entry */}
                 </Row>
                 <Row className="mb-3">
                   <Accordion>
@@ -127,7 +150,8 @@ function InvoiceModal(props) {
                       <Accordion.Header>
                         {selectedInvoice
                           ? selectedInvoice.invoiceEntries[0].serviceName
-                          : newInvoice.invoiceEntries[0].serviceName}
+                          : newInvoice?.invoiceEntries[0].serviceName}
+                        {/* TODO need delete button to each entry */}
                       </Accordion.Header>
                       <Accordion.Body className='ps-2 pe-2'>
                         <Row className="mb-3">
@@ -140,9 +164,9 @@ function InvoiceModal(props) {
                                 ? selectedInvoice.invoiceEntries[0].serviceName
                                 : newInvoice.invoiceEntries[0].serviceName}
                             />
-                            <Button id="edit-servicename-btn">
-                              {/* TODO should enable/disable servicename input, implement when multiple entries are done
+                            {/* TODO should enable/disable servicename input, implement when multiple entries are done
                             using the local state of the entry */}
+                            <Button id="edit-servicename-btn" disabled>
                               <PencilSquare />
                             </Button>
                           </InputGroup>

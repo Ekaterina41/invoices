@@ -15,6 +15,7 @@ function App() {
       date: '2023-07-03',
       period: '2023-06',
       vacations: 0,
+      workdays: 22,
       total: 4048,
       vat: 0,
       ttp: 4048,
