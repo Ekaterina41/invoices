@@ -50,7 +50,7 @@ function EditInvoiceForm(props) {
                     </Row>
                     <Row className="mb-3">
                         <Col xs={4}>
-                            <Form.Label>Reporting period</Form.Label>
+                            <Form.Label>Period</Form.Label>
                             <Form.Control type="month"
                                 value={selectedInvoice.period}
                                 onChange={(e) => setSelectedInvoice({ ...selectedInvoice, period: e.target.value })}
@@ -116,7 +116,7 @@ function EditInvoiceForm(props) {
                                         <Col xs={4}>
                                             <Form.Label>Quantity</Form.Label>
                                             <InputGroup>
-                                                <Form.Control type="number" aria-describedby="hours-quantity"
+                                                <Form.Control type="number" aria-describedby="hours-quantity" disabled
                                                     value={selectedInvoice.invoiceEntries[0].quantity}
                                                 />
                                                 <InputGroup.Text id="hours-quantity">hours</InputGroup.Text>
@@ -125,7 +125,7 @@ function EditInvoiceForm(props) {
                                         <Col xs={4}>
                                             <Form.Label>Cost</Form.Label>
                                             <InputGroup>
-                                                <Form.Control type="number" aria-describedby="currency-cost"
+                                                <Form.Control type="number" aria-describedby="currency-cost" disabled
                                                     value={selectedInvoice.invoiceEntries[0].cost}
                                                 />
                                                 <InputGroup.Text id="currency-cost">.00 $</InputGroup.Text>
@@ -140,7 +140,7 @@ function EditInvoiceForm(props) {
                         <Col xs={4}>
                             <Form.Label>Total</Form.Label>
                             <InputGroup>
-                                <Form.Control type="number" aria-describedby="currency-total"
+                                <Form.Control type="number" aria-describedby="currency-total" disabled
                                     value={selectedInvoice.total}
                                 />
                                 <InputGroup.Text id="currency-total">.00 $</InputGroup.Text>
@@ -158,7 +158,7 @@ function EditInvoiceForm(props) {
                         <Col xs={{ span: 4, offset: 1 }}>
                             <Form.Label>Total to pay</Form.Label>
                             <InputGroup>
-                                <Form.Control type="number" aria-describedby="currency-ttp"
+                                <Form.Control type="number" aria-describedby="currency-ttp" disabled
                                     value={selectedInvoice.ttp}
                                 />
                                 <InputGroup.Text id="currency-ttp">.00 $</InputGroup.Text>
