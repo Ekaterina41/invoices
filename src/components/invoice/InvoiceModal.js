@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from "react-bootstrap";
-import CreateInvoiceForm from './forms/invoice/CreateInvoiceForm';
-import EditInvoiceForm from './forms/invoice/EditInvoiceForm';
+import CreateInvoiceForm from './forms/CreateInvoiceForm';
+import EditInvoiceForm from './forms/EditInvoiceForm';
 
 function InvoiceModal(props) {
 

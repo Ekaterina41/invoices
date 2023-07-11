@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import InvoiceList from './components/invoice/InvoiceList';
-import InvoicePagination from './components/InvoicePagination';
-import InvoiceSideMenu from './components/InvoiceSideMenu';
-import InvoiceModal from './components/InvoiceModal';
+import InvoiceList from './components/invoice/list/InvoiceList';
+import InvoicePagination from './components/invoice/InvoicePagination';
+import InvoiceSideMenu from './components/invoice/InvoiceSideMenu';
+import InvoiceModal from './components/invoice/InvoiceModal';
 import { Container, Button } from "react-bootstrap";
 import { PlusLg, List } from "react-bootstrap-icons";
 import 'bootstrap/dist/css/bootstrap.css';
