@@ -13,7 +13,7 @@ function CreateInvoiceForm(props) {
     const price = props.price; // todo to const
 
     const createInvoice = () => {
-        const generatedId = invoices.length + 1;
+        const generatedId = invoices[invoices.length - 1].id + 1;
         const invoiceWithId = { ...newInvoice, id: generatedId };
         setInvoices([...invoices, invoiceWithId]);
         handleCloseModal();

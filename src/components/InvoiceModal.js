@@ -15,19 +15,20 @@ function InvoiceModal(props) {
   const showModal = props.showModal;
   const setShowModal = props.setShowModal;
 
-  // New invoice utils
-  const currentDate = new Date();
-  const defaultInvoiceDate = currentDate.toISOString().split('T')[0];
-
-  const prevMonthDate = new Date(currentDate);
-  prevMonthDate.setMonth(currentDate.getMonth() - 1);
-  const defaultInvoicePeriod = prevMonthDate.toISOString().substring(0, 7);
-
   // Functions
   const countNewInvoice = () => {
+    const currentDate = new Date();
+    const defaultInvoiceDate = currentDate.toISOString().split('T')[0];
+
+    const prevMonthDate = new Date(currentDate);
+    prevMonthDate.setMonth(currentDate.getMonth() - 1);
+    const defaultInvoicePeriod = prevMonthDate.toISOString().substring(0, 7);
+
+    const defaultInvoiceNumber = invoices[invoices.length - 1].number + 1;
+
     return {
       id: 0,
-      number: 0,
+      number: defaultInvoiceNumber,
       date: defaultInvoiceDate,
       period: defaultInvoicePeriod,
       vacations: 0,
@@ -46,16 +47,21 @@ function InvoiceModal(props) {
     };
   }
 
+  const onShowModal = () => {
+    if (!selectedInvoice) {
+      setNewInvoice(countNewInvoice);
+    }
+  }
+
   const handleCloseModal = () => {
     setSelectedInvoice(null);
-    setNewInvoice(countNewInvoice());
     setShowModal(false);
   }
 
   const [newInvoice, setNewInvoice] = useState(countNewInvoice);
 
   return (
-    <Modal id='invoice-modal' show={showModal} onHide={handleCloseModal} backdrop='static' keyboard={false}
+    <Modal id='invoice-modal' show={showModal} onShow={onShowModal} onHide={handleCloseModal} backdrop='static' keyboard={false}
       size='lg'>
       <Modal.Dialog id="invoice-modal-dialog">
         <Modal.Header closeButton>
