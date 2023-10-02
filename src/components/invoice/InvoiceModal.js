@@ -24,7 +24,7 @@ function InvoiceModal(props) {
     prevMonthDate.setMonth(currentDate.getMonth() - 1);
     const defaultInvoicePeriod = prevMonthDate.toISOString().substring(0, 7);
 
-    const defaultInvoiceNumber = invoices[invoices.length - 1].number + 1;
+    const defaultInvoiceNumber = invoices[invoices.length - 1]?.number + 1;
 
     return {
       id: 0,

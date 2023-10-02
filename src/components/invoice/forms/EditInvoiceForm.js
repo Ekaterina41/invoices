@@ -84,7 +84,7 @@ function EditInvoiceForm(props) {
                         <Accordion>
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>
-                                    {selectedInvoice.invoiceEntries[0].serviceName}
+                                    {selectedInvoice.invoiceEntries[0]?.serviceName}
                                     {/* TODO need delete button to each entry */}
                                 </Accordion.Header>
                                 <Accordion.Body className='ps-2 pe-2'>
@@ -94,7 +94,7 @@ function EditInvoiceForm(props) {
                                             <Form.Control id="" type="text" disabled
                                                 aria-label="Edit service name"
                                                 aria-describedby="edit-servicename-btn"
-                                                value={selectedInvoice.invoiceEntries[0].serviceName}
+                                                value={selectedInvoice.invoiceEntries[0]?.serviceName}
                                             />
                                             {/* TODO should enable/disable servicename input, implement when multiple entries are done
                         using the local state of the entry */}
@@ -117,7 +117,7 @@ function EditInvoiceForm(props) {
                                             <Form.Label>Quantity</Form.Label>
                                             <InputGroup>
                                                 <Form.Control type="number" aria-describedby="hours-quantity" disabled
-                                                    value={selectedInvoice.invoiceEntries[0].quantity}
+                                                    value={selectedInvoice.invoiceEntries[0]?.quantity}
                                                 />
                                                 <InputGroup.Text id="hours-quantity">hours</InputGroup.Text>
                                             </InputGroup>
@@ -126,7 +126,7 @@ function EditInvoiceForm(props) {
                                             <Form.Label>Cost</Form.Label>
                                             <InputGroup>
                                                 <Form.Control type="number" aria-describedby="currency-cost" disabled
-                                                    value={selectedInvoice.invoiceEntries[0].cost}
+                                                    value={selectedInvoice.invoiceEntries[0]?.cost}
                                                 />
                                                 <InputGroup.Text id="currency-cost">.00 $</InputGroup.Text>
                                             </InputGroup>

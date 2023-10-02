@@ -1,8 +1,7 @@
 # Invoices app
 
+This is a simple React-Bootstrap based application that allows to manage payment invoices.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).\
-This is a simple front-end web application that allows to create, store and print pdf invoices for 
-software developer services monthly payment.
 
 ## Prerequisites
 
@@ -17,6 +16,11 @@ Installs react bootstrap modules. It allows to use Bootstrap classes as React co
 ### `npm install react-bootstrap-icons --save`
 
 Adds bootstrap icons package to display bootstrap icons in the UI.
+
+### `npm install axios`
+
+Adds Axios HTTP client thai is needed to access backend REST API.
+
 ## Running the app
 ### `npm start`
 

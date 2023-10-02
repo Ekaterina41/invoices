@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import InvoiceList from './components/invoice/list/InvoiceList';
 import InvoicePagination from './components/invoice/InvoicePagination';
 import InvoiceSideMenu from './components/invoice/InvoiceSideMenu';
@@ -8,27 +9,48 @@ import { PlusLg, List } from "react-bootstrap-icons";
 import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
-  const [invoices, setInvoices] = useState([
-    {
-      id: 14, 
-      number: 14,
-      date: '2023-07-03',
-      period: '2023-06',
-      vacations: 0,
-      workdays: 22,
-      total: 4048,
-      vat: 0,
-      ttp: 4048,
-      invoiceEntries: [
-        {
-          id: 1,
-          serviceName: "The services of software development from 01.06.2023 to 30.06.2023",
-          quantity: 176,
-          cost: 4048
-        }
-      ]
-    }
-  ]);
+  const invoiceCRUDApiUrl = 'http://localhost:8080/invoice';
+  const getAllInvoicesUrl = `${invoiceCRUDApiUrl}/all`
+
+  const [invoices, setInvoices] = useState([]);
+
+  const fetchInvoices = () => {
+    console.log("fetchInvoices is called");
+    axios.get(getAllInvoicesUrl)
+    .then((response) => {
+      const invoicesFromServer = response.data;
+      setInvoices(invoicesFromServer);
+    })
+    .catch(error => console.error(`Error retrievig invoices from server: ${error}`));
+  }
+
+  // Retrieve invoices from server when component is rendered
+  useEffect(() => { 
+    console.log("useEffect is running");
+    fetchInvoices();
+  }, []);
+
+    //[
+  //   {
+  //     id: 14, 
+  //     number: 14,
+  //     date: '2023-07-03',
+  //     period: '2023-06',
+  //     vacations: 0,
+  //     workdays: 22,
+  //     total: 4048,
+  //     vat: 0,
+  //     ttp: 4048,
+  //     invoiceEntries: [
+  //       {
+  //         id: 1,
+  //         serviceName: "The services of software development from 01.06.2023 to 30.06.2023",
+  //         quantity: 176,
+  //         cost: 4048
+  //       }
+  //     ]
+  //   }
+  // ]);
 
   // Menu utils
   const [showMenu, setShowMenu] = useState(false);
